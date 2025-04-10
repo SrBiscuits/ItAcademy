@@ -56,12 +56,12 @@ foreign key(user_id)
 references data_user(id);
 
 -- Exercici 2
-select transaction.id as IdTransaccion, data_user.name as Nombre, data_user.surname As Apellido, credit_card.iban as IBAN,
-	company.company_name as NombreCompañia, transaction.amount as Cantidad
+select transaction.id as IdTransaccion, name as Nombre, surname As Apellido, iban as IBAN,
+	company_name as NombreCompañia, amount as Cantidad
 from transaction
-join company on transaction.company_id = company.id
-join credit_card on transaction.credit_card_id=credit_card.id
-join data_user on transaction.user_id=data_user.id
+join company on company_id = company.id
+join credit_card on credit_card_id=credit_card.id
+join data_user on user_id=data_user.id
 order by transaction.id desc;
 
 select * from informetecnico;
