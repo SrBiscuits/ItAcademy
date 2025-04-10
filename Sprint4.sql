@@ -64,35 +64,52 @@ foreign key (business_id) references companies(company_id)
 );
 
 
-LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\users.csv' 
+LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\users_usa.csv' 
 INTO TABLE users
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
+LINES TERMINATED BY '\r\n'
+ignore 1 rows;
+LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\users_uk.csv' 
+INTO TABLE users
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+ignore 1 rows;
+LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\users_ca.csv' 
+INTO TABLE users
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+ignore 1 rows;
 
 LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\credit_cards.csv' 
 INTO TABLE credit_cards
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
+ignore 1 rows;
 
 LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\companies.csv' 
 INTO TABLE companies
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
+ignore 1 rows;
 
 LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\products.csv' 
 INTO TABLE products
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
+ignore 1 rows;
 
 LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\transactions.csv' 
 INTO TABLE transaction
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
+LINES TERMINATED BY '\r\n'
+ignore 1 rows;
 
 select users.name, users.surname, subquery.conteo
 from (select user_id as id, count(*) as conteo
@@ -106,12 +123,12 @@ join (
 ) as users on users.id = subquery.id;
 
 -- Exercici 2
-select credit_cards.iban, avg(transaction.amount) as mediaGasto
+select iban, avg(transaction.amount) as mediaGasto
 from transaction
 join credit_cards on card_id = credit_cards.id
 join companies on business_id = company_id
 where company_name="Donec ltd" and declined=0
-group by credit_cards.iban;
+group by iban;
 
 -- Nivell 2
 -- Exercici 1
@@ -148,7 +165,28 @@ select * from activecards;
 -- Nivell 3
 -- Exercici 1
 
+create table transactions_products(
+transaction_id varchar (255),
+product_id int,
 
+foreign key (transaction_id) references transaction(id),
+foreign key (product_id) references products(id)
+);
+
+insert into transactions_products (transaction_id, product_id)
+select transaction.id,
+       cast(trim(SUBSTRING_INDEX(SUBSTRING_INDEX(product_ids, ',', n), ',', -1)) as unsigned) as producto_id
+from transaction
+join (
+  select 1 as n
+  union all select 2
+  union all select 3
+  union all select 4
+  union all select 5
+) as numeros
+on numeros.n <= 1 + length(product_ids) - length(replace(product_ids, ',', ''));
+
+select * from transactions_products;
 
 select product_id, count(*)
 from transactions_products
