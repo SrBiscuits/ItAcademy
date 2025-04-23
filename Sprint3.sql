@@ -21,6 +21,15 @@ SET iban = "R323456312213576817699999"
 WHERE id = 'CcU-2938';
 
 -- Exercici 3
+insert into data_user (id,name,surname,phone,email,birth_date,country,city,postal_code,address,personal_emal)
+values ('9999',null,null,null,null,null,null,null,null,null,null);
+
+insert into credit_card (id,iban,pin,cvv,expiring_date,fecha_actual)
+values ('CcU-9999',null,null,null,'2025-12-12',null);
+
+insert into company (id,company_name,phone,email,country)
+values ('b-9999',null,null,null,null);
+
 INSERT INTO transaction (id, credit_card_id, company_id, user_id, lat, longitude, timestamp, amount, declined) 
 VALUES ('108B1D1D-5B23-A76C-55EF-C568E49A99DD', 'CcU-9999', 'b-9999', '9999', '829.999', '-117.999', null ,'111.11', '0');
 
@@ -34,7 +43,6 @@ Delete from transaction
 WHERE id = '02C6201E-D90A-1859-B4EE-88D2986D3B02';
 
 -- Exercici 2
-
 create view vistamarketing as
 select company_name, phone, country , avg(amount) as average
 from company

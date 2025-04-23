@@ -100,4 +100,3 @@ from company
 join transaction on company.id = company_id
 group by company_id
 order by count(company_id) desc;
-
