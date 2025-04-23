@@ -63,19 +63,20 @@ foreign key (user_id) references users(id),
 foreign key (business_id) references companies(company_id)
 );
 
-
 LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\users_usa.csv' 
 INTO TABLE users
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 ignore 1 rows;
+
 LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\users_uk.csv' 
 INTO TABLE users
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 ignore 1 rows;
+
 LOAD DATA INFILE 'C:\\Users\\xXSrBiscuitXx\\Desktop\\ITACADEMY\\especializacion\\sprint4\\users_ca.csv' 
 INTO TABLE users
 FIELDS TERMINATED BY ',' 
@@ -111,7 +112,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 ignore 1 rows;
 
-select users.name, users.surname, subquery.conteo
+select name, surname, conteo
 from (select user_id as id, count(*) as conteo
 from transaction
 group by user_id
@@ -123,7 +124,7 @@ join (
 ) as users on users.id = subquery.id;
 
 -- Exercici 2
-select iban, avg(transaction.amount) as mediaGasto
+select iban, round(avg(transaction.amount),2) as mediaGasto
 from transaction
 join credit_cards on card_id = credit_cards.id
 join companies on business_id = company_id
@@ -164,7 +165,6 @@ select * from activecards;
 
 -- Nivell 3
 -- Exercici 1
-
 create table transactions_products(
 transaction_id varchar (255),
 product_id int,
@@ -191,4 +191,3 @@ select * from transactions_products;
 select product_id, count(*)
 from transactions_products
 group by product_id;
-

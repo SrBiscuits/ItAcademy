@@ -22,7 +22,7 @@ WHERE id = 'CcU-2938';
 
 -- Exercici 3
 INSERT INTO transaction (id, credit_card_id, company_id, user_id, lat, longitude, timestamp, amount, declined) 
-VALUES ('108B1D1D-5B23-A76C-55EF-C568E49A99DD', 'CcU-9999', 'b-9999', '9999', '829.999', ' 	-117.999', null ,'111.11', '0');
+VALUES ('108B1D1D-5B23-A76C-55EF-C568E49A99DD', 'CcU-9999', 'b-9999', '9999', '829.999', '-117.999', null ,'111.11', '0');
 
 -- Exercici 4
 alter table credit_card drop pan;
@@ -34,6 +34,13 @@ Delete from transaction
 WHERE id = '02C6201E-D90A-1859-B4EE-88D2986D3B02';
 
 -- Exercici 2
+
+select company_name, phone, country , avg(amount) as average
+from company
+join transaction on transaction.company_id = company.id
+group by transaction.company_id, phone, country
+order by average desc;
+
 select * from vistamarketing;
 
 -- Exercici 3
@@ -44,7 +51,7 @@ where country = "Germany";
 -- Exercici 1
 alter table company drop website;
 rename table user to data_user;
-alter table data_user add personal_emal varchar(100);
+alter table data_user add personal_email varchar(100);
 alter table credit_card change cvv cvv int;
 alter table credit_card add fecha_actual date;
 

@@ -79,7 +79,7 @@ where company_id IN (
 		select country
         from company 
         where company_name="Non Institute"
-    ));
+));
 
 -- NIVELL 3
 -- Exercici 1
