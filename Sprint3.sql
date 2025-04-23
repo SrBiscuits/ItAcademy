@@ -35,6 +35,7 @@ WHERE id = '02C6201E-D90A-1859-B4EE-88D2986D3B02';
 
 -- Exercici 2
 
+create view vistamarketing as
 select company_name, phone, country , avg(amount) as average
 from company
 join transaction on transaction.company_id = company.id
@@ -63,6 +64,7 @@ foreign key(user_id)
 references data_user(id);
 
 -- Exercici 2
+create view informetecnico as
 select transaction.id as IdTransaccion, name as Nombre, surname As Apellido, iban as IBAN,
 	company_name as NombreCompañia, amount as Cantidad
 from transaction
