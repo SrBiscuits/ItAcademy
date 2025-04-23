@@ -112,16 +112,21 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 ignore 1 rows;
 
-select name, surname, conteo
-from (select user_id as id, count(*) as conteo
-from transaction
-group by user_id
-having conteo>30
-order by conteo desc) as subquery
-join (
- select name,surname, id
- from users
-) as users on users.id = subquery.id;
+select name, surname, (
+    select count(*) 
+    from transaction
+    where user_id = users.id and declined = 0
+) as conteo
+from users
+where users.id in (
+  select user_id
+  from transaction
+  where declined = 0
+  group by user_id
+  having count(*) > 30
+)
+order by conteo desc;
+
 
 -- Exercici 2
 select iban, round(avg(transaction.amount),2) as mediaGasto
