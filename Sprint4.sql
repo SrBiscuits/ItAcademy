@@ -1,6 +1,6 @@
 -- Nivell 1
 -- Exercici 1
-create database sprint4;
+-- create database sprint4;
 use sprint4;
 
 create table credit_cards(
